@@ -1,41 +1,23 @@
-app = "botbot4xin"
-primary_region = "sin"
+# fly.toml app configuration file generated for botbot4xin on 2025-12-22T09:27:15Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'botbot4xin'
+primary_region = 'sin'
 
 [build]
 
-# 定义进程
-[processes]
-  app = "python main.py"
-
-# 使用标准的 [[services]] 写法，解决 "missing ports" 报错
-[[services]]
-  protocol = "tcp"
+[http_service]
   internal_port = 8080
-  processes = ["app"]  # 明确绑定到 app 进程
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
 
-  # 映射外部 80 端口 -> 内部 8080
-  [[services.ports]]
-    port = 80
-    handlers = ["http"]
-    force_https = true
-
-  # 映射外部 443 端口 -> 内部 8080
-  [[services.ports]]
-    port = 443
-    handlers = ["tls", "http"]
-
-  # 健康检查
-  [[services.http_checks]]
-    interval = "10s"
-    timeout = "2s"
-    grace_period = "5s"
-    restart_limit = 0
-    method = "get"
-    path = "/"
-    protocol = "http"
-
-# 虚拟机配置
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
+  memory = '1gb'
+  cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 256
