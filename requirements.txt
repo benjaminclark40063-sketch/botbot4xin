@@ -1,0 +1,7 @@
+python-telegram-bot
+requests[socks]
+psycopg2-binary
+pycryptodome
+flask
+gunicorn
+pysocks
